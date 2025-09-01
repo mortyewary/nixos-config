@@ -1,4 +1,4 @@
-# homeManagerModules/git.nix
+# modules/home-manager/git.nix
 {
   programs.git = {
     enable = true;

@@ -1,30 +1,17 @@
+{ inputs, pkgs, ... }:
+
 {
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}: {
+  # Import any home-manager or other modules here if needed
   imports = [
     inputs.spicetify-nix.homeManagerModules.default
-    # You can import your own or other modules here
-    # outputs.homeManagerModules.example
-    # inputs.nix-colors.homeManagerModules.default
-    # ./nvim.nix
+    # You can add more imports here if you want
   ];
 
   nixpkgs = {
     overlays = [
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.unstable-packages
-      # Example of inline overlay:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
+      # Add overlays if you have any, for example:
+      # ./overlays/additions.nix
+      # outputs.overlays.additions
     ];
 
     config = {
@@ -32,26 +19,20 @@
     };
   };
 
-  home = {
-    username = "waylon";
-    homeDirectory = "/home/waylon";
-    stateVersion = "25.05";
-  };
+  home.username = "waylon";
+  home.homeDirectory = "/home/waylon";
+  home.stateVersion = "25.05";  # ✅ required
 
-  home.packages = with pkgs; [
-    oh-my-zsh
-    oh-my-posh
-    inputs.zen-browser.packages.${system}.twilight
-    vesktop
-    steam
-  ];
+    home.packages = with pkgs; [
+      oh-my-zsh
+      oh-my-posh
+      inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.twilight
+      vesktop
+      steam
+    ];
 
-  programs = {
-    # Zsh configuration
-    zsh = {
+    programs.zsh = {
       enable = true;
-      enableCompletions = true;
-      autosuggestions.enable = true;
       syntaxHighlighting.enable = true;
 
       shellAliases = {
@@ -62,8 +43,7 @@
       history.size = 10000;
     };
 
-    # Spicetify configuration
-    spicetify = {
+    programs.spicetify = {
       enable = true;
 
       enabledExtensions = with inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system}.extensions; [
@@ -79,17 +59,6 @@
       colorScheme = "mocha";
     };
 
-    # Git configuration
-    git = {
-      enable = true;
-      userName  = "mortyewary";
-      userEmail = "waylondn@proton.me";
-    };
 
-    # Home Manager itself
-    home-manager.enable = true;
-  };
-
-  # Automatically reload systemd user services on config change
-  systemd.user.startServices = "sd-switch";
-}
+    systemd.user.startServices =  "sd-switch" ;
+  }
