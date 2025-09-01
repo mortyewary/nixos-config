@@ -1,5 +1,3 @@
-# This is your home-manager configuration file
-# Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 {
   inputs,
   outputs,
@@ -8,60 +6,90 @@
   pkgs,
   ...
 }: {
-  # You can import other home-manager modules here
   imports = [
-    # If you want to use modules your own flake exports (from modules/home-manager):
+    inputs.spicetify-nix.homeManagerModules.default
+    # You can import your own or other modules here
     # outputs.homeManagerModules.example
-
-    # Or modules exported from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModules.default
-
-    # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
   ];
 
   nixpkgs = {
-    # You can add overlays here
     overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
-
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
+      # Example of inline overlay:
       # (final: prev: {
       #   hi = final.hello.overrideAttrs (oldAttrs: {
       #     patches = [ ./change-hello-to-hi.patch ];
       #   });
       # })
     ];
-    # Configure your nixpkgs instance
+
     config = {
-      # Disable if you don't want unfree packages
       allowUnfree = true;
     };
   };
 
-  # TODO: Set your username
   home = {
     username = "waylon";
     homeDirectory = "/home/waylon";
+    stateVersion = "25.05";
   };
 
-  # Add stuff for your user as you see fit:
-  # programs.neovim.enable = true;
-  # home.packages = with pkgs; [ steam ];
+  home.packages = with pkgs; [
+    oh-my-zsh
+    oh-my-posh
+    inputs.zen-browser.packages.${system}.twilight
+    vesktop
+    steam
+  ];
 
-  # Enable home-manager and git
-  programs.home-manager.enable = true;
-  programs.git.enable = true;
+  programs = {
+    # Zsh configuration
+    zsh = {
+      enable = true;
+      enableCompletions = true;
+      autosuggestions.enable = true;
+      syntaxHighlighting.enable = true;
 
-  # Nicely reload system units when changing configs
+      shellAliases = {
+        ll = "ls -l";
+        update = "sudo nixos-rebuild switch";
+      };
+
+      history.size = 10000;
+    };
+
+    # Spicetify configuration
+    spicetify = {
+      enable = true;
+
+      enabledExtensions = with inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system}.extensions; [
+        adblock
+        hidePodcasts
+      ];
+
+      enabledCustomApps = with inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system}.apps; [
+        newReleases
+      ];
+
+      theme = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system}.themes.catppuccin;
+      colorScheme = "mocha";
+    };
+
+    # Git configuration
+    git = {
+      enable = true;
+      userName  = "mortyewary";
+      userEmail = "waylondn@proton.me";
+    };
+
+    # Home Manager itself
+    home-manager.enable = true;
+  };
+
+  # Automatically reload systemd user services on config change
   systemd.user.startServices = "sd-switch";
-
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "25.05";
 }

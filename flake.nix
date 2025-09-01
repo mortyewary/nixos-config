@@ -12,6 +12,10 @@
     # Home manager
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    # custom packages
+    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
   };
 
   outputs = {
@@ -58,8 +62,7 @@
     nixosConfigurations = {
       # FIXME replace with your hostname
       nixos = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;
-        unstable = import nixpkgs-unstable {system = "x86_64-linux"; config.allowUnfree = true; };};
+        specialArgs = {inherit inputs outputs; unstable = import nixpkgs-unstable {system = "x86_64-linux"; config.allowUnfree = true; };};
         modules = [
           # > Our main nixos configuration file <
           ./nixos/configuration.nix

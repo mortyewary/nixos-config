@@ -2,13 +2,14 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, unstable,  ... }:
+{ config, pkgs, inputs, unstable,  ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
+
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -90,13 +91,16 @@
     packages = with pkgs; [
     #  thunderbird
       kdePackages.kate
+      kdePackages.filelight
     ];
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
+  programs.git.enable = true;
 
-  # Install gamescope && gamemode
+  # Install firefox.
+  programs.firefox.enable = false;
+
+  # Install gaming packages
   programs.gamescope.enable = true;
   programs.gamemode.enable = true;
 
@@ -108,10 +112,7 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
-      git
-      vesktop
-      steam
-      spotify
+      inputs.home-manager.packages.${pkgs.system}.default
 
   # unstable packages
       unstable.heroic
