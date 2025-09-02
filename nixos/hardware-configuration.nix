@@ -4,31 +4,30 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules =
+    [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/8b8c4aa8-c16c-449c-b5c1-082c17f44211";
-      fsType = "ext4";
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/8b8c4aa8-c16c-449c-b5c1-082c17f44211";
+    fsType = "ext4";
+  };
 
-  boot.initrd.luks.devices."luks-6fa5f939-9682-498a-b546-54dbe4030fa4".device = "/dev/disk/by-uuid/6fa5f939-9682-498a-b546-54dbe4030fa4";
+  boot.initrd.luks.devices."luks-6fa5f939-9682-498a-b546-54dbe4030fa4".device =
+    "/dev/disk/by-uuid/6fa5f939-9682-498a-b546-54dbe4030fa4";
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/E153-2ED4";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/E153-2ED4";
+    fsType = "vfat";
+    options = [ "fmask=0077" "dmask=0077" ];
+  };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/6d131184-ae22-4a5d-af52-5d2b520d2ee2"; }
-    ];
+    [{ device = "/dev/disk/by-uuid/6d131184-ae22-4a5d-af52-5d2b520d2ee2"; }];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
@@ -39,5 +38,6 @@
   # networking.interfaces.wlo1.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode =
+    lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

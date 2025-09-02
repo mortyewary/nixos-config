@@ -2,14 +2,52 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, unstable,  ... }:
+{ config, pkgs, inputs, unstable, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
+  # Enable OpenGL
+  hardware.graphics = { enable = true; };
+
+  # Load nvidia driver for Xorg and Wayland
+  services.xserver.videoDrivers = [ "nvidia" ];
+
+  hardware.nvidia = {
+
+    # Modesetting is required.
+    modesetting.enable = true;
+
+    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
+    # Enable this if you have graphical corruption issues or application crashes after waking
+    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
+    # of just the bare essentials.
+    powerManagement.enable = false;
+
+    # Fine-grained power management. Turns off GPU when not in use.
+    # Experimental and only works on modern Nvidia GPUs (Turing or newer).
+    powerManagement.finegrained = false;
+
+    # Use the NVidia open source kernel module (not to be confused with the
+    # independent third-party "nouveau" open source driver).
+    # Support is limited to the Turing and later architectures. Full list of 
+    # supported GPUs is at: 
+    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
+    # Only available from driver 515.43.04+
+    open = false;
+
+    # Enable the Nvidia settings menu,
+    # accessible via `nvidia-settings`.
+    nvidiaSettings = true;
+
+    # Optionally, you may need to select the appropriate driver version for your specific GPU.
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+
+  #zsh
+  users.defaultUserShell = pkgs.zsh;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -18,7 +56,8 @@
   # Use Liquorix kernel.
   boot.kernelPackages = pkgs.linuxPackages_lqx;
 
-  boot.initrd.luks.devices."luks-f1055ba0-2e73-4b72-9e71-f42f2405d5f1".device = "/dev/disk/by-uuid/f1055ba0-2e73-4b72-9e71-f42f2405d5f1";
+  boot.initrd.luks.devices."luks-f1055ba0-2e73-4b72-9e71-f42f2405d5f1".device =
+    "/dev/disk/by-uuid/f1055ba0-2e73-4b72-9e71-f42f2405d5f1";
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -48,18 +87,14 @@
   };
 
   # Enable the X11 windowing system.
-  # You can disable this if you're only using the Wayland session.
-  services.xserver.enable = true;
+  services.xserver.enable = false;
 
-  # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
+  # Enable Hyprland (Wayland tiling window manager)
+  programs.hyprland.enable = true;
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
+  # Remove or comment out GNOME-related lines:
+  # services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.desktopManager.gnome.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -87,15 +122,17 @@
   users.users.waylon = {
     isNormalUser = true;
     description = "Waylon Neal";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "docker" "networkmanager" "wheel" ];
     packages = with pkgs; [
-    #  thunderbird
+      # thunderbird
       kdePackages.kate
       kdePackages.filelight
     ];
   };
 
   programs.git.enable = true;
+  programs.zsh.enable = true;
+  programs.thunar.enable = true;
 
   # Install firefox.
   programs.firefox.enable = false;
@@ -107,36 +144,49 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # --- Development tools ---
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
-      inputs.home-manager.packages.${pkgs.system}.default
-      mangohud
+    kitty
+    git
+    gcc
+    gnumake
+    cmake
+    python3
+    nodejs
+    go
+    rustc
+    cargo
+    docker
+    vscode
+    inputs.home-manager.packages.${pkgs.system}.default
+    mangohud
+    # Add more editors/tools as needed
   ];
 
-  # enable nix flakes and nix-command
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  # Enable Flatpak for extra apps
+  services.flatpak.enable = true;
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  # Enable SSH for remote development
+  services.openssh.enable = true;
 
-  # List services that you want to enable:
+  # --- Gaming tools ---
+  programs.steam.enable = true;
 
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  # --- General ---
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+  services.saned.enable = true; # For scanners
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  # Enable firewall and open common ports
+  networking.firewall.enable = true;
+  networking.firewall.allowedTCPPorts = [ 22 80 443 ];
+
+  # Power management (for laptops)
+  powerManagement.enable = true;
+
+  # --- System auto-upgrade ---
+  system.autoUpgrade.enable = true;
+  system.autoUpgrade.allowReboot = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -146,4 +196,16 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
 
+  services.greetd.enable = true;
+  services.greetd.settings = {
+    default_session = {
+      command = "Hyprland";
+      user = "waylon";
+    };
+  };
+
+  environment.sessionVariables = {
+    WLR_NO_HARDWARE_CURSORS = "1";
+    GBM_BACKEND = "nvidia-drm";
+  };
 }

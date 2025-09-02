@@ -1,5 +1,5 @@
 {
-  description = "Your new nix config";
+  description = "Waylon's Nix Flake Configuration";
 
   inputs = {
     # Nixpkgs
@@ -16,7 +16,7 @@
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... } @ inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... }@inputs:
     let
       inherit (self) outputs;
       systems = [
@@ -29,9 +29,11 @@
       forAllSystems = nixpkgs.lib.genAttrs systems;
     in {
       # Your custom packages
-      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+      packages =
+        forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
       # Formatter for your nix files
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+      formatter =
+        forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
       # Overlays
       overlays = import ./overlays { inherit inputs; };
@@ -50,9 +52,7 @@
               config.allowUnfree = true;
             };
           };
-          modules = [
-            ./nixos/configuration.nix
-          ];
+          modules = [ ./nixos/configuration.nix ];
         };
       };
 
