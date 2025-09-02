@@ -145,7 +145,7 @@
     bind = $mainMod, Space, exec, $menu
     bind = $mainMod, P, pseudo,
     bind = $mainMod, J, togglesplit,
-    bind = $mainMod, F, togglefullscreen
+    bind = $mainMod, F, fullscreen
 
     # Fullscreen screenshot
     bind = $mainMod, PRINT, exec, ~/.local/bin/grimblast.sh
