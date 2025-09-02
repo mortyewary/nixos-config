@@ -17,16 +17,23 @@
   home.homeDirectory = "/home/waylon";
   home.stateVersion = "25.05";  # ✅ required
 
+  # Set your login shell here
+  home.shell = pkgs.zsh;
+
   home.packages = with pkgs; [
-    oh-my-zsh
-    oh-my-posh
+    
+    # packages
     vscode
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.twilight
     vesktop
     steam
+    protontricks
+
+    # unstable packages
     unstable.heroic
   ];
 
+  # enable useful programs for home-manager config
   programs.direnv.enable = true;
 
   programs.zsh = {
