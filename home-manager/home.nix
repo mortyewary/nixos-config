@@ -28,8 +28,9 @@
     wofi # App launcher for Wayland
     dunst # Notification daemon
     wl-clipboard # Clipboard utilities
-    grim
+    grim # Screenshot tools
     slurp # Screenshot tools
+    grimblast # Screenshot tools
     hyprpaper # Wallpaper utility
     xwayland # For legacy X11 apps
     # Add more as needed

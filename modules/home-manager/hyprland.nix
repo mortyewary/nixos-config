@@ -135,13 +135,24 @@
 
     $mainMod = SUPER
     bind = $mainMod, Return, exec, $terminal
+    # Open VSCode
+    bind = $mainMod, C, exec, code
+
     bind = $mainMod, Q, killactive,
     bind = $mainMod, M, exit,
     bind = $mainMod, E, exec, $fileManager
-    bind = $mainMod, F, togglefloating,
+    bind = $mainMod, K, togglefloating,
     bind = $mainMod, Space, exec, $menu
     bind = $mainMod, P, pseudo,
     bind = $mainMod, J, togglesplit,
+    bind = $mainMod, F, togglefullscreen
+
+    # Fullscreen screenshot
+    bind = $mainMod, PRINT, exec, ~/.local/bin/grimblast.sh
+
+    # Selection screenshot (slurp)
+    bind = $mainMod, SHIFT+PRINT, exec, grimblast --interactive --output ~/Pictures/screenshots
+
     bind = $mainMod, left, movefocus, l
     bind = $mainMod, right, movefocus, r
     bind = $mainMod, up, movefocus, u
