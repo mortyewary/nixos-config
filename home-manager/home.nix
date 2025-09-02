@@ -4,8 +4,6 @@
   # Import any home-manager or other modules here if needed
   imports = [
     inputs.spicetify-nix.homeManagerModules.default
-    ./modules/home-manager/hyprland.nix
-    ./modules/home-manager/waybar.nix
   ];
 
   nixpkgs = {

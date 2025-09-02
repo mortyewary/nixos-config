@@ -5,6 +5,7 @@
     {
       "layer": "top",
       "position": "top",
+
       "modules-left": ["launcher", "workspaces", "tray"],
       "modules-center": ["clock"],
       "modules-right": [
@@ -18,51 +19,51 @@
       ],
 
       "launcher": {
-        "icon": "", // NixOS logo (requires nerd font)
+        "icon": " 🚀",
         "on-click": "wofi --show drun",
-        "tooltip": "App Launcher"
+        "tooltip": "Launch Applications"
       },
 
       "clock": {
-        "format": "{:%a %d %b %H:%M}",
-        "tooltip-format": "{:%Y-%m-%d %H:%M:%S}"
+        "format": "🕒 {:%a %d %b %H:%M}",
+        "tooltip-format": "📅 {:%Y-%m-%d %H:%M:%S}"
       },
 
       "network": {
-        "format-wifi": " {essid} ({signalStrength}%)",
-        "format-ethernet": "󰈀 {ifname}",
-        "format-disconnected": "󰖪 Disconnected"
+        "format-wifi": "📶 {essid} ({signalStrength}%)",
+        "format-ethernet": "🔌 {ifname}",
+        "format-disconnected": "❌ Disconnected"
       },
 
       "pulseaudio": {
-        "format": "{icon} {volume}%",
-        "format-muted": "󰖁 Muted",
+        "format": "🔊 {volume}%",
+        "format-muted": "🔇 Muted",
         "on-click": "pavucontrol"
       },
 
       "backlight": {
-        "format": "󰃠 {percent}%"
+        "format": "💡 {percent}%"
       },
 
       "battery": {
-        "format": "{icon} {capacity}%",
-        "format-charging": "󰂄 {capacity}%"
+        "format": "🔋 {capacity}%",
+        "format-charging": "⚡ {capacity}%"
       },
 
       "custom/darkmode": {
-        "format": "󰖓",
+        "format": "🌗",
         "tooltip": "Toggle Dark/Light Mode",
         "on-click": "notify-send 'Toggle dark mode (implement script)'"
       },
 
       "custom/reboot": {
-        "format": "󰜉",
+        "format": "🔄",
         "tooltip": "Reboot",
         "on-click": "systemctl reboot"
       },
 
       "custom/poweroff": {
-        "format": "󰐥",
+        "format": "⏻",
         "tooltip": "Power Off",
         "on-click": "systemctl poweroff"
       }
@@ -74,41 +75,43 @@
       font-family: "FiraCode Nerd Font", "Noto Sans", "Font Awesome", sans-serif;
       font-size: 14px;
     }
+
     window {
       background: #232946;
       color: #eebbc3;
       border-radius: 8px;
       border: 2px solid #3e4c6d;
     }
-    #workspaces button {
+
+    /* Generic module styling */
+    #workspaces button,
+    #clock,
+    #tray,
+    #network,
+    #pulseaudio,
+    #backlight,
+    #battery,
+    #custom-darkmode,
+    #custom-reboot,
+    #custom-poweroff,
+    #launcher {
       background: #232946;
       color: #eebbc3;
       border-radius: 4px;
       margin: 2px;
-      padding: 0 8px;
+      padding: 0 10px;
     }
-    #clock {
-      background: #232946;
-      color: #eebbc3;
-      border-radius: 4px;
-      padding: 0 12px;
-      margin: 2px;
-    }
-    #tray, #network, #pulseaudio, #backlight, #battery, #custom-darkmode, #custom-reboot, #custom-poweroff {
-      background: #232946;
-      color: #eebbc3;
-      border-radius: 4px;
-      margin: 2px;
-      padding: 0 8px;
-    }
+
+    /* Special launcher color */
     #launcher {
       background: #3e4c6d;
-      color: #eebbc3;
-      border-radius: 4px;
-      margin: 2px;
-      padding: 0 12px;
     }
-    #custom-darkmode:hover, #custom-reboot:hover, #custom-poweroff:hover, #launcher:hover {
+
+    /* Hover effects */
+    #custom-darkmode:hover,
+    #custom-reboot:hover,
+    #custom-poweroff:hover,
+    #launcher:hover {
       background: #eebbc3;
       color: #232946;
     }

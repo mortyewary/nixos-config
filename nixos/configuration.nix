@@ -57,11 +57,10 @@
     isNormalUser = true;
     description = "Waylon Neal";
     extraGroups = [ "docker" "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      kdePackages.kate
-      kdePackages.filelight
-      # thunderbird
-    ];
+    packages = with pkgs;
+      [
+        # thunderbird
+      ];
   };
 
   # --- Environment ---
@@ -85,14 +84,35 @@
     # Add more editors/tools as needed
   ];
 
-  fonts.packages = with pkgs; [
-    nerd-fonts.fira-code
-    nerd-fonts.droid-sans-mono
-  ];
+  fonts = {
+    enableDefaultPackages = true;
+    packages = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-emoji
+      fira-code
+      nerd-fonts.fira-code
+    ];
+    fontconfig = {
+      defaultFonts = {
+        serif = [ "Noto Serif" "Noto Color Emoji" ];
+        sansSerif = [ "Noto Sans" "Noto Color Emoji" ];
+        monospace = [ "FiraCode Nerd Font" "Noto Color Emoji" ];
+        emoji = [ "Noto Color Emoji" ];
+      };
+    };
+  };
 
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSORS = "1";
     GBM_BACKEND = "nvidia-drm";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    LIBVA_DRIVER_NAME = "nvidia";
+    WLR_RENDERER = "vulkan";
+    QT_QPA_PLATFORM = "wayland";
+    QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+    GDK_BACKEND = "wayland";
+    XDG_SESSION_TYPE = "wayland";
   };
 
   # --- Desktop & UI ---
@@ -141,7 +161,7 @@
   };
 
   # --- Power Management ---
-  powerManagement.enable = true;
+  powerManagement.enable = false;
 
   # --- System ---
   nixpkgs.config.allowUnfree = true;
