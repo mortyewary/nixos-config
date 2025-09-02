@@ -13,14 +13,8 @@
       v = "nvim";
     };
 
-    initExtra = ''
+    initContent = ''
       # Load zsh-autosuggestions
-      source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-      # Load zsh-syntax-highlighting
-      source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-      # Initialize direnv
       eval "$(direnv hook zsh)"
     '';
   };
@@ -30,7 +24,6 @@
     enable = true;
     settings = {
       add_newline = false;
-      prompt_order = [ "username" "hostname" "directory" "git_branch" "git_status" "cmd_duration" "line_break" "jobs" "character" ];
       character = {
         success_symbol = "[❯](bold green)";
         error_symbol = "[❯](bold red)";
