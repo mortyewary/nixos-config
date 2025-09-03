@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-  cfg = config.home.file."~/.config/Thunar/uca.xml";
+  cfg = config.home.file."/home/waylon/.config/Thunar/uca.xml";
 in
 {
   options.home.thunarUCA = {
@@ -13,9 +13,9 @@ in
   };
 
   config = lib.mkIf (config.home.thunarUCA.enable) {
-    home.file."~/.config/Thunar/uca.xml".text = ''
+    home.file."/home/waylon/.config/Thunar/uca.xml".text = ''
       <?xml version="1.0" encoding="UTF-8"?>
-      <actions>
+      <actions>clear
       <action>
         <icon>utilities-terminal</icon>
         <name>Open Terminal Here</name>
