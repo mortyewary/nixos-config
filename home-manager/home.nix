@@ -19,6 +19,7 @@
   home.packages = with pkgs; [
 
     # --- Development / CLI tools ---
+    unzip # Unzip utility
     git # Version control
     cargo # Rust package manager
     rustc # Rust compiler
