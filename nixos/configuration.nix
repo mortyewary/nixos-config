@@ -98,6 +98,7 @@
     ranger
     btop
     p7zip
+    fastfetch
     vscode
     git
     gnumake
@@ -147,6 +148,7 @@
 
   # --- Desktop & UI ---
   programs.hyprland.enable = true;
+  programs.hyprland.xwayland.enable = true;
   programs.thunar.enable = true;
   programs.git.enable = true;
   programs.zsh.enable = true;
@@ -175,19 +177,19 @@
   };
 
   # --- Display Manager ---
-services.greetd = {
-  enable = true;
-  settings = {
-    initial_session = {
-      command = "${pkgs.hyprland}/bin/hyprland";
-      user = "waylon";
-    };
-    default_session = {
-      command = "tuigreet --time --cmd ${pkgs.hyprland}/bin/hyprland";
-      user = "waylon";
+  services.greetd = {
+    enable = true;
+    settings = {
+      initial_session = {
+        command = "${pkgs.hyprland}/bin/hyprland";
+        user = "waylon";
+      };
+      default_session = {
+        command = "tuigreet --time --cmd ${pkgs.hyprland}/bin/hyprland";
+        user = "waylon";
+      };
     };
   };
-};
 
   # --- Portals (Wayland integration) ---
   xdg.portal = {

@@ -2,9 +2,7 @@
 
 {
   # Import any home-manager or other modules here if needed
-  imports = [
-    inputs.spicetify-nix.homeManagerModules.default
-  ];
+  imports = [ inputs.spicetify-nix.homeManagerModules.default ];
 
   nixpkgs = {
     overlays = [ ];
@@ -21,12 +19,16 @@
     protontricks
     nixfmt-classic
     vesktop
+    polychromatic
+    signal-desktop
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.twilight
     unstable.heroic
     # Hyprland/Wayland tools:
     waybar # Status bar for Wayland
     wofi # App launcher for Wayland
     dunst # Notification daemon
+    libnotify # Notification library
+    hyprshot # Screenshot tools
     wl-clipboard # Clipboard utilities
     grim # Screenshot tools
     slurp # Screenshot tools

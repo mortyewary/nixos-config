@@ -1,119 +1,244 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
-  xdg.configFile."waybar/config.json".text = ''
-    {
-      "layer": "top",
-      "position": "top",
+  # Configure & Theme Waybar
+  programs.waybar = {
+    enable = true;
+    package = pkgs.waybar;
+    settings = [{
+      layer = "top";
+      position = "top";
 
-      "modules-left": ["launcher", "workspaces", "tray"],
-      "modules-center": ["clock"],
-      "modules-right": [
-        "network",
-        "pulseaudio",
-        "backlight",
-        "battery",
-        "custom/darkmode",
-        "custom/reboot",
-        "custom/poweroff"
-      ],
-
-      "launcher": {
-        "icon": " 🚀",
-        "on-click": "wofi --show drun",
-        "tooltip": "Launch Applications"
-      },
-
-      "clock": {
-        "format": "🕒 {:%a %d %b %H:%M}",
-        "tooltip-format": "📅 {:%Y-%m-%d %H:%M:%S}"
-      },
-
-      "network": {
-        "format-wifi": "📶 {essid} ({signalStrength}%)",
-        "format-ethernet": "🔌 {ifname}",
-        "format-disconnected": "❌ Disconnected"
-      },
-
-      "pulseaudio": {
-        "format": "🔊 {volume}%",
-        "format-muted": "🔇 Muted",
-        "on-click": "pavucontrol"
-      },
-
-      "backlight": {
-        "format": "💡 {percent}%"
-      },
-
-      "battery": {
-        "format": "🔋 {capacity}%",
-        "format-charging": "⚡ {capacity}%"
-      },
-
-      "custom/darkmode": {
-        "format": "🌗",
-        "tooltip": "Toggle Dark/Light Mode",
-        "on-click": "notify-send 'Toggle dark mode (implement script)'"
-      },
-
-      "custom/reboot": {
-        "format": "🔄",
-        "tooltip": "Reboot",
-        "on-click": "systemctl reboot"
-      },
-
-      "custom/poweroff": {
-        "format": "⏻",
-        "tooltip": "Power Off",
-        "on-click": "systemctl poweroff"
-      }
+      modules-left = [ "hyprland/window" ];
+      modules-center = [ "network" "pulseaudio" "cpu" "hyprland/workspaces" "memory" "disk" "clock" ];
+      modules-right = [ "custom/themeselector" "custom/notification" "tray" ];
+      "hyprland/workspaces" = {
+      	format = "{icon}";
+      	format-icons = {
+          default = " ";
+          active = " ";
+          urgent = " ";
+      	};
+      	on-scroll-up = "hyprctl dispatch workspace e+1";
+      	on-scroll-down = "hyprctl dispatch workspace e-1";
+      };
+      "clock" = {
+        format = "{: %I:%M %p}";
+      	tooltip = false;
+      };
+      "hyprland/window" = {
+      	max-length = 60;
+      	separate-outputs = false;
+      };
+      "memory" = {
+      	interval = 5;
+      	format = " {}%";
+        tooltip = true;
+      };
+      "cpu" = {
+      	interval = 5;
+      	format = " {usage:2}%";
+        tooltip = true;
+      };
+      "disk" = {
+        format = "  {free}";
+        tooltip = true;
+      };
+      "network" = {
+        format-icons = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
+        format-ethernet = ": {bandwidthDownOctets} : {bandwidthUpOctets}";
+        format-wifi = "{icon} {signalStrength}%";
+        format-disconnected = "󰤮";
+        tooltip = false;
+      };
+      "tray" = {
+        spacing = 12;
+      };
+      "pulseaudio" = {
+        format = "{icon} {volume}% {format_source}";
+        format-bluetooth = "{volume}% {icon} {format_source}";
+        format-bluetooth-muted = " {icon} {format_source}";
+        format-muted = " {format_source}";
+        format-source = " {volume}%";
+        format-source-muted = "";
+        format-icons = {
+          headphone = "";
+          hands-free = "";
+          headset = "";
+          phone = "";
+          portable = "";
+          car = "";
+          default = ["" "" ""];
+        };
+        on-click = "pavucontrol";
+      };
+      "custom/themeselector" = {
+        tooltip = false;
+        format = "";
+        on-click = "theme-selector";
+      };
+      "custom/notification" = {
+        tooltip = false;
+        format = "{icon} {}";
+        format-icons = {
+          notification = "<span foreground='red'><sup></sup></span>";
+          none = "";
+          dnd-notification = "<span foreground='red'><sup></sup></span>";
+          dnd-none = "";
+          inhibited-notification = "<span foreground='red'><sup></sup></span>";
+          inhibited-none = "";
+          dnd-inhibited-notification = "<span foreground='red'><sup></sup></span>";
+          dnd-inhibited-none = "";
+       	};
+        return-type = "json";
+        exec-if = "which swaync-client";
+        exec = "swaync-client -swb";
+        on-click = "task-waybar";
+        escape = true;
+      };
+      "battery" = {
+        states = {
+          warning = 30;
+          critical = 15;
+        };
+        format = "{icon} {capacity}%";
+        format-charging = "󰂄 {capacity}%";
+        format-plugged = "󱘖 {capacity}%";
+        format-icons = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
+        on-click = "";
+        tooltip = false;
+      };
+    }];
+    style = ''
+	* {
+		font-size: 16px;
+		font-family: JetBrainsMono Nerd Font, Font Awesome, sans-serif;
+    		font-weight: bold;
+	}
+	window#waybar {
+		    background-color: rgba(26,27,38,0);
+    		border-bottom: 1px solid rgba(26,27,38,0);
+    		border-radius: 0px;
+		    color: #${config.colorScheme.colors.base0F};
+	}
+	#workspaces {
+		    background: linear-gradient(180deg, #${config.colorScheme.colors.base00}, #${config.colorScheme.colors.base01});
+    		margin: 5px;
+    		padding: 0px 1px;
+    		border-radius: 15px;
+    		border: 0px;
+    		font-style: normal;
+    		color: #${config.colorScheme.colors.base00};
+	}
+	#workspaces button {
+    		padding: 0px 5px;
+    		margin: 4px 3px;
+    		border-radius: 15px;
+    		border: 0px;
+    		color: #${config.colorScheme.colors.base00};
+    		background-color: #${config.colorScheme.colors.base00};
+    		opacity: 1.0;
+    		transition: all 0.3s ease-in-out;
+	}
+	#workspaces button.active {
+    		color: #${config.colorScheme.colors.base00};
+    		background: #${config.colorScheme.colors.base04};
+    		border-radius: 15px;
+    		min-width: 40px;
+    		transition: all 0.3s ease-in-out;
+    		opacity: 1.0;
+	}
+	#workspaces button:hover {
+    		color: #${config.colorScheme.colors.base00};
+    		background: #${config.colorScheme.colors.base04};
+    		border-radius: 15px;
+    		opacity: 1.0;
+	}
+	tooltip {
+  		background: #${config.colorScheme.colors.base00};
+  		border: 1px solid #${config.colorScheme.colors.base04};
+  		border-radius: 10px;
+	}
+	tooltip label {
+  		color: #${config.colorScheme.colors.base07};
+	}
+	#window {
+    		color: #${config.colorScheme.colors.base05};
+    		background: #${config.colorScheme.colors.base00};
+    		border-radius: 0px 15px 50px 0px;
+    		margin: 5px 5px 5px 0px;
+    		padding: 2px 20px;
+	}
+	#memory {
+    		color: #${config.colorScheme.colors.base0F};
+    		background: #${config.colorScheme.colors.base00};
+    		border-radius: 15px 50px 15px 50px;
+    		margin: 5px;
+    		padding: 2px 20px;
+	}
+	#clock {
+    		color: #${config.colorScheme.colors.base0B};
+    		background: #${config.colorScheme.colors.base00};
+    		border-radius: 15px 50px 15px 50px;
+    		margin: 5px;
+    		padding: 2px 20px;
+	}
+	#cpu {
+    		color: #${config.colorScheme.colors.base07};
+    		background: #${config.colorScheme.colors.base00};
+    		border-radius: 50px 15px 50px 15px;
+    		margin: 5px;
+    		padding: 2px 20px;
+	}
+	#disk {
+    		color: #${config.colorScheme.colors.base03};
+    		background: #${config.colorScheme.colors.base00};
+    		border-radius: 15px 50px 15px 50px;
+    		margin: 5px;
+    		padding: 2px 20px;
+	}
+	#battery {
+    		color: #${config.colorScheme.colors.base08};
+    		background: #${config.colorScheme.colors.base00};
+    		border-radius: 15px;
+    		margin: 5px;
+    		padding: 2px 20px;
+	}
+	#network {
+    		color: #${config.colorScheme.colors.base09};
+    		background: #${config.colorScheme.colors.base00};
+    		border-radius: 50px 15px 50px 15px;
+    		margin: 5px;
+    		padding: 2px 20px;
+	}
+	#tray {
+    		color: #${config.colorScheme.colors.base05};
+    		background: #${config.colorScheme.colors.base00};
+    		border-radius: 15px 0px 0px 50px;
+    		margin: 5px 0px 5px 5px;
+    		padding: 2px 20px;
+	}
+	#pulseaudio {
+    		color: #${config.colorScheme.colors.base0D};
+    		background: #${config.colorScheme.colors.base00};
+    		border-radius: 50px 15px 50px 15px;
+    		margin: 5px;
+    		padding: 2px 20px;
+	}
+	#custom-notification {
+    		color: #${config.colorScheme.colors.base0C};
+    		background: #${config.colorScheme.colors.base00};
+    		border-radius: 15px 50px 15px 50px;
+    		margin: 5px;
+    		padding: 2px 20px;
+	}
+    #custom-themeselector {
+    		color: #${config.colorScheme.colors.base0D};
+    		background: transparent;
+    		border-radius: 5px;
+    		margin: 5px;
+    		padding: 2px 2px;
     }
-  '';
-
-  xdg.configFile."waybar/style.css".text = ''
-    * {
-      font-family: "FiraCode Nerd Font", "Noto Sans", "Font Awesome", sans-serif;
-      font-size: 14px;
-    }
-
-    window {
-      background: #232946;
-      color: #eebbc3;
-      border-radius: 8px;
-      border: 2px solid #3e4c6d;
-    }
-
-    /* Generic module styling */
-    #workspaces button,
-    #clock,
-    #tray,
-    #network,
-    #pulseaudio,
-    #backlight,
-    #battery,
-    #custom-darkmode,
-    #custom-reboot,
-    #custom-poweroff,
-    #launcher {
-      background: #232946;
-      color: #eebbc3;
-      border-radius: 4px;
-      margin: 2px;
-      padding: 0 10px;
-    }
-
-    /* Special launcher color */
-    #launcher {
-      background: #3e4c6d;
-    }
-
-    /* Hover effects */
-    #custom-darkmode:hover,
-    #custom-reboot:hover,
-    #custom-poweroff:hover,
-    #launcher:hover {
-      background: #eebbc3;
-      color: #232946;
-    }
-  '';
+    '';
+  };
 }

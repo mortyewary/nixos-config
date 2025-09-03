@@ -147,11 +147,11 @@
     bind = $mainMod, J, togglesplit,
     bind = $mainMod, F, fullscreen
 
-    # Fullscreen screenshot
-    bind = $mainMod, PRINT, exec, ~/.local/bin/grimblast.sh
+    # Screenshot a screen
+    bind = $mainMod, PRINT, exec, hyprshot -m output
+    # Screenshot a region
+    bind = SHIFT, PRINT, exec, hyprshot -m region
 
-    # Selection screenshot (slurp)
-    bind = $mainMod, SHIFT+PRINT, exec, grimblast --interactive --output ~/Pictures/screenshots
 
     bind = $mainMod, left, movefocus, l
     bind = $mainMod, right, movefocus, r
