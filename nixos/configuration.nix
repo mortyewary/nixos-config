@@ -95,6 +95,7 @@
   # --- Environment ---
   environment.systemPackages = with pkgs; [
     openrazer-daemon
+    ncmpcpp
     ranger
     btop
     p7zip
@@ -200,6 +201,21 @@
 
   # --- Power Management ---
   powerManagement.enable = false;
+
+  # --- mpd ---
+  services.mpd = {
+    enable = true;
+    musicDirectory = "/home/waylon/Music"; # don’t use $HOME, expand it
+    user = "waylon";
+    extraConfig = ''
+      audio_output {
+        type "pipewire"
+        name "Pipewire"
+      }
+      # must specify one or more outputs in order to play audio!
+      # (e.g. ALSA, PulseAudio, PipeWire), see next sections
+    '';
+  };
 
   # --- System ---
   nixpkgs.config.allowUnfree = true;
