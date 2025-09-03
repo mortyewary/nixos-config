@@ -2,7 +2,18 @@
 
 {
   # Import any required Home Manager modules (like spicetify)
-  imports = [ inputs.spicetify-nix.homeManagerModules.default ];
+  imports = [
+    inputs.spicetify-nix.homeManagerModules.default
+    ./modules/home-manager/thunar-uca.nix
+    ./modules/home-manager/git.nix
+    ./modules/home-manager/shell.nix
+    ./modules/home-manager/hyprland.nix
+    #./modules/home-manager/waybar.nix
+    #./modules/home-manager/colors.nix
+  ];
+
+  # Enable Thunar custom actions
+  home.thunarUCA.enable = true;
 
   # Allow unfree packages
   nixpkgs = {
@@ -76,7 +87,7 @@
     gamemode # Optimize system while gaming
     protonup-qt # ProtonUp-Qt for managing Wine/Proton versions
     unstable.heroic # Heroic Games Launcher
-    mangohud            # Performance overlay for games
+    mangohud # Performance overlay for games
 
     # --- Communication ---
     vesktop # Desktop client for Discord
@@ -84,10 +95,11 @@
     discord-canary # Unstable Discord client with latest features
 
     # --- Extra Utilities/GUI Utilities ---
-    pavucontrol         # Audio control GUI
-    p7zip               # Compression tool
+    pavucontrol # Audio control GUI
+    p7zip # Compression tool
     inputs.zen-browser.packages."x86_64-linux".twilight
     vscode # Code editor
+    xfce.xfconf # XFCE configuration system (used by Thunar)
   ];
 
   # --- Shell and productivity ---
@@ -100,6 +112,14 @@
       update = "sudo nixos-rebuild switch"; # Quick system update
     };
     history.size = 10000; # Increase Zsh history size
+  };
+
+  home.sessionVariables = {
+    EDITOR = "code"; # Default editor
+    VISUAL = "code"; # Default visual editor
+    TERMINAL = "kitty"; # Default terminal
+    BROWSER = "zen-browser"; # Default web browser
+    GIT_EDITOR = "code"; # Git commit message editor
   };
 
   # --- Spicetify (Spotify customization) ---

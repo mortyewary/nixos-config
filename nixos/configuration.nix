@@ -96,6 +96,7 @@
     QT_QPA_PLATFORM = "wayland";
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
     GDK_BACKEND = "wayland";
+    HYPRSHOT_DIR = "/home/waylon/Pictures/Screenshots";
   };
 
   # --- Desktop & UI ---
@@ -103,6 +104,11 @@
   programs.hyprland.xwayland.enable = true;
   programs.zsh.enable = true;
   programs.firefox.enable = false;
+  programs.thunar.enable = true; # File manager
+  programs.thunar.plugins = with pkgs.xfce; [
+    thunar-archive-plugin # Archive support (zip, tar, etc.)
+    thunar-volman # Automount drives
+  ];
 
   # --- Services ---
   services.printing.enable = true;
@@ -110,7 +116,9 @@
   services.openssh.enable = true;
   services.blueman.enable = true;
   services.saned.enable = true; # Scanner support
-
+  services.gvfs.enable = true; # Mount, trash, and other functionalities
+  services.tumbler.enable = true; # Thumbnail support for images
+  
   # --- Music Player Daemon (MPD) ---
   services.mpd = {
     enable = true;
@@ -140,7 +148,7 @@
         user = "waylon";
       };
       default_session = {
-        command = "tuigreet --time --cmd ${pkgs.hyprland}/bin/hyprland";
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd ${pkgs.hyprland}/bin/hyprland";
         user = "waylon";
       };
     };

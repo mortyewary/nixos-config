@@ -69,11 +69,6 @@
           };
           modules = [
             ./home-manager/home.nix
-            ./modules/home-manager/git.nix
-            ./modules/home-manager/shell.nix
-            ./modules/home-manager/hyprland.nix
-            #./modules/home-manager/waybar.nix
-            #./modules/home-manager/colors.nix
           ];
         };
       };
