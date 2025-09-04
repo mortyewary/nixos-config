@@ -24,6 +24,7 @@ in
     steam gamescope gamemode protonup-qt
     unstable.heroic     # from nixpkgs-unstable
     unstable.mangohud   # from nixpkgs-unstable
+  
 
     # --- Communication ---
     vesktop signal-desktop discord-canary
