@@ -24,6 +24,7 @@ in
     steam gamescope gamemode protonup-qt openmw
     unstable.heroic     # from nixpkgs-unstable
     unstable.mangohud   # from nixpkgs-unstable
+    xorg.xeyes          # just for testing XWayland
   
 
     # --- Communication ---
