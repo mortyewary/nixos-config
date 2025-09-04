@@ -3,7 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./modules/nixos
+    ../modules/nixos  # Only one line for all modules
   ];
 
   nixpkgs.config.allowUnfree = true;

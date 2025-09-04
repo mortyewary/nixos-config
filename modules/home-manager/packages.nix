@@ -1,26 +1,34 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
+let
+  # Import nixpkgs-unstable for specific packages
+  unstable = import inputs.nixpkgs-unstable {
+    inherit (pkgs) system;
+  };
+in
 {
   home.packages = with pkgs; [
-    # Development / CLI tools
+    # --- Development / CLI tools ---
     unzip git cargo rustc nodejs python3 cmake gnumake nixfmt-classic aria2
 
-    # Terminal utilities
+    # --- Terminal utilities ---
     kitty ranger tmux btop ncdu fzf ripgrep bat fd fastfetch jq curl wget ncmpcpp
 
-    # Ranger-related
+    # --- Ranger-related ---
     w3m ueberzug highlight atool mediainfo ffmpegthumbnailer imagemagick file exiftool
 
-    # Wayland / Hyprland tools
+    # --- Wayland / Hyprland tools ---
     waybar wofi dunst libnotify hyprshot grim slurp grimblast hyprpaper xwayland wl-clipboard
 
-    # Gaming
-    steam gamescope gamemode protonup-qt unstable.heroic mangohud
+    # --- Gaming ---
+    steam gamescope gamemode protonup-qt
+    unstable.heroic     # from nixpkgs-unstable
+    unstable.mangohud   # from nixpkgs-unstable
 
-    # Communication
+    # --- Communication ---
     vesktop signal-desktop discord-canary
 
-    # Extra utilities
+    # --- Extra utilities ---
     pavucontrol p7zip inputs.zen-browser.packages."x86_64-linux".twilight
     vscode xfce.xfconf
   ];

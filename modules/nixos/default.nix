@@ -1,16 +1,19 @@
-{ config, pkgs, inputs, ... }:
+# modules/nixos/default.nix
+{ config, pkgs, lib, ... }:
 
-[
-  ./boot.nix
-  ./gpu.nix
-  ./networking.nix
-  ./locale.nix
-  ./users.nix
-  ./packages.nix
-  ./fonts.nix
-  ./environment.nix
-  ./desktop.nix
-  ./services.nix
-  ./audio.nix
-  ./power.nix
-]
+{
+  imports = [
+    ./audio.nix
+    ./boot.nix
+    ./desktop.nix
+    ./environment.nix
+    ./fonts.nix
+    ./gpu.nix
+    ./locale.nix
+    ./networking.nix
+    ./packages.nix
+    ./power.nix
+    ./services.nix
+    ./users.nix
+  ];
+}

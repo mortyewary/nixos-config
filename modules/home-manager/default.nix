@@ -1,13 +1,15 @@
-{ config, pkgs, inputs, ... }:
+# modules/home-manager/default.nix
+{ config, pkgs, lib, inputs, ... }:
 
-[
-  ./packages.nix
-  ./shell.nix
-  ./wayland.nix
-  ./git.nix
-  ./hyprland.nix
-  ./spicetify.nix
-  ./openmw-nix.nix
-  #  ./waybar.nix
-  #  ./colors.nix
-]
+{
+  imports = [
+    ./git.nix
+    ./hyprland.nix
+    ./openmw-nix.nix
+    ./packages.nix
+    ./shell.nix
+    ./thunar-uca.nix
+    ./wayland.nix
+  ];
+}
+
