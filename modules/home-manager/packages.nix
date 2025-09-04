@@ -18,7 +18,7 @@ in
     w3m ueberzug highlight atool mediainfo ffmpegthumbnailer imagemagick file exiftool
 
     # --- Wayland / Hyprland tools ---
-    wofi dunst libnotify hyprshot grim slurp grimblast hyprpaper wl-clipboard
+    waybar rofi dunst libnotify hyprshot grim slurp grimblast hyprpaper wl-clipboard
 
     # --- Gaming ---
     steam gamescope gamemode protonup-qt openmw

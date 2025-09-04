@@ -34,7 +34,7 @@
 
     $terminal = kitty
     $fileManager = thunar
-    $menu = wofi --show drun
+    $menu = rofi -show drun
 
     #################
     ### AUTOSTART ###
