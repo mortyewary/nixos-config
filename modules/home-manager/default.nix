@@ -11,6 +11,7 @@
     ./thunar.nix
     ./thunar-uca.nix
     ./wayland.nix
+    ./waybar.nix
   ];
 }
 
