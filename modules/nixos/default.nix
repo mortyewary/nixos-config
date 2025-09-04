@@ -1,7 +1,16 @@
-# Add your reusable NixOS modules to this directory, on their own file (https://nixos.wiki/wiki/Module).
-# These should be stuff you would like to share with others, not your personal configurations.
-{
-  imports = [
-    ./git.nix
-  ];
-}
+{ config, pkgs, inputs, ... }:
+
+[
+  ./boot.nix
+  ./gpu.nix
+  ./networking.nix
+  ./locale.nix
+  ./users.nix
+  ./packages.nix
+  ./fonts.nix
+  ./environment.nix
+  ./desktop.nix
+  ./services.nix
+  ./audio.nix
+  ./power.nix
+]
