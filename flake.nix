@@ -73,6 +73,7 @@
             ./modules/home-manager/git.nix
             ./modules/home-manager/shell.nix
             ./modules/home-manager/hyprland.nix
+            ./modules/home-manager/opnenmw-nix.nix
             #./modules/home-manager/waybar.nix
             #./modules/home-manager/colors.nix
           ];
