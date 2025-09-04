@@ -4,9 +4,6 @@
   # Import any required Home Manager modules (like spicetify)
   imports = [ inputs.spicetify-nix.homeManagerModules.default ];
 
-  # Enable Thunar custom actions
-  home.thunarUCA.enable = true;
-
   # Allow unfree packages
   nixpkgs = {
     overlays = [ ];
@@ -80,6 +77,9 @@
     protonup-qt # ProtonUp-Qt for managing Wine/Proton versions
     unstable.heroic # Heroic Games Launcher
     mangohud # Performance overlay for games
+
+    # --- OpenMW (Morrowind engine) ---
+    unstable.openmw # OpenMW game engine (Morrowind)
 
     # --- Communication ---
     vesktop # Desktop client for Discord
