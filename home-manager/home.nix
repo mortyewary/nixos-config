@@ -4,8 +4,8 @@
   imports =
     [ ../modules/home-manager inputs.spicetify-nix.homeManagerModules.default ];
 
-  home.username = "${inputs.flake.username}";
-  home.homeDirectory = "/home/${inputs.flake.username}";
+  home.username = "waylon";
+  home.homeDirectory = "/home/waylon";
   home.stateVersion = "25.05";
 
   programs.spicetify = let

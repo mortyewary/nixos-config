@@ -1,7 +1,7 @@
 { pkgs, username, ... }:
 
 let
-  inherit (import ./variables.nix) gitUsername;
+  inherit (import "./variables.nix") userName;
 in
 {
   users = { 
@@ -9,7 +9,7 @@ in
     users."${username}" = {
       homeMode = "755";
       isNormalUser = true;
-      description = "${gitUsername}";
+      description = "${userName}";
       extraGroups = [
         "networkmanager"
         "wheel"
