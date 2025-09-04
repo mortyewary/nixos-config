@@ -8,6 +8,7 @@
     noto-fonts-emoji
     fira-code
     nerd-fonts.fira-code
+    font-awesome
   ];
   fonts.fontconfig.defaultFonts = {
     serif = [ "Noto Serif" "Noto Color Emoji" ];

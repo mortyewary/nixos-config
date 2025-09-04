@@ -10,6 +10,17 @@
     QT_QPA_PLATFORM = "wayland";
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
     GDK_BACKEND = "wayland";
-    HYPRSHOT_DIR = "/home/waylon/Pictures/Screenshots";
+    NIXOS_OZONE_WL = "1";
+    XDG_SESSION_DESKTOP = "Hyprland";
+    XDG_CURRENT_DESKTOP = "Hyprland";
+    XDG_DESKTOP_DIR = "$HOME/Desktop";
+    XDG_DOWNLOAD_DIR = "$HOME/Downloads";
+    XDG_TEMPLATES_DIR = "$HOME/Templates";
+    XDG_PUBLICSHARE_DIR = "$HOME/Public";
+    XDG_DOCUMENTS_DIR = "$HOME/Documents";
+    XDG_MUSIC_DIR = "$HOME/Music";
+    XDG_PICTURES_DIR = "$HOME/Pictures";
+    XDG_VIDEOS_DIR = "$HOME/Videos";
+    HYPRSHOT_DIR = "/home/waylon/Pictures/screenshots";
   };
 }
