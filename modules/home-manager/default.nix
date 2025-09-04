@@ -3,7 +3,6 @@
 
 {
   imports = [
-    ./git.nix
     ./hyprland.nix
     ./openmw-nix.nix
     ./packages.nix

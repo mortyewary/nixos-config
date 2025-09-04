@@ -2,8 +2,11 @@
 # Variables
 
 {
-  # Git Configuration ( For Pulling Software Repos )
-  gitUsername = "waylon";
+  # System User Configuration
+  userName = "waylon"; # Linux login username
+
+  # Git Configuration (for commits / repos)
+  gitUsername = "Waylon Neal"; # Display name for Git commits
   gitEmail = "waylondn@proton.me";
 
   # Hyprland Settings
@@ -13,7 +16,7 @@
   clock24h = true;
 
   # Program Options
-  browser = "zen"; # Set Default Browser (google-chrome-stable for google-chrome)
-  terminal = "kitty"; # Set Default System Terminal
+  browser = "zen";   # Default Browser (google-chrome-stable for Chrome)
+  terminal = "kitty"; # Default System Terminal
   keyboardLayout = "us";
 }

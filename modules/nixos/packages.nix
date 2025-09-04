@@ -121,8 +121,6 @@
       tumbler
     ];
 
-    virt-manager.enable = false;
-
     steam = {
       enable = true;
       gamescopeSession.enable = true;
