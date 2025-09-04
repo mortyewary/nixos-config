@@ -21,7 +21,7 @@ in
     waybar wofi dunst libnotify hyprshot grim slurp grimblast hyprpaper xwayland wl-clipboard
 
     # --- Gaming ---
-    steam gamescope gamemode protonup-qt
+    steam gamescope gamemode protonup-qt openmw
     unstable.heroic     # from nixpkgs-unstable
     unstable.mangohud   # from nixpkgs-unstable
   

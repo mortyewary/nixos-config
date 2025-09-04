@@ -10,7 +10,6 @@ in
   # -----------------------------
   home.packages = with openmwPkgs; [
     delta-plugin         # Save game delta compression plugin
-    openmw-dev          # OpenMW development files
     openmw-validator     # Save file validator
     momw-configurator    # GUI configuration tool
     s3lightfixes         # Light fixes for OpenMW
