@@ -15,6 +15,5 @@
     ./power.nix
     ./services.nix
     ./users.nix
-    ./openmw-nix.nix
   ];
 }

@@ -21,7 +21,7 @@
 
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, spicetify-nix, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, spicetify-nix, openmw-nix, home-manager, ... }@inputs:
     let
       systems = [
         "aarch64-linux"
