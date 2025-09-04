@@ -80,6 +80,15 @@
 
     # --- OpenMW (Morrowind engine) ---
     unstable.openmw # OpenMW game engine (Morrowind)
+    delta-plugin  # Save game delta compression plugin for OpenMW
+    openmw-dev  # Development files for OpenMW
+    openmw-validator  # OpenMW save file validator
+    momw-configurator  # OpenMW configuration tool
+    s3lightfixes  # Light fixes for OpenMW
+    umo  # Unofficial Morrowind Overhaul
+    curldl  # Download tool for OpenMW assets
+    groundcoverify  # Groundcover enhancements for OpenMW
+    plox  # Plox - a plugin for OpenMW
 
     # --- Communication ---
     vesktop # Desktop client for Discord

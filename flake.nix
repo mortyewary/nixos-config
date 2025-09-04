@@ -14,9 +14,13 @@
     # custom packages
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
+    openmw-nix = {
+      url = "git+https://codeberg.org/PopeRigby/openmw-nix.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, openmw-nix, ... }@inputs:
     let
       inherit (self) outputs;
       systems = [
@@ -73,7 +77,7 @@
             ./modules/home-manager/git.nix
             ./modules/home-manager/shell.nix
             ./modules/home-manager/hyprland.nix
-            ./modules/home-manager/opnenmw-nix.nix
+            ./modules/home-manager/openmw-nix.nix
             #./modules/home-manager/waybar.nix
             #./modules/home-manager/colors.nix
           ];
