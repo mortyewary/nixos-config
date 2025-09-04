@@ -1,6 +1,6 @@
 {
   imports = [
-    ./modules/thunar-uca.nix
+    ./thunar-uca.nix
   ];
 
   home.thunarUCA.actions = [
