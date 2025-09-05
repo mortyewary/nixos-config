@@ -2,7 +2,10 @@
   nixpkgs.config.allowUnfree = true;
 
   imports =
-    [ ../modules/home-manager inputs.spicetify-nix.homeManagerModules.default ];
+    [ ../modules/home-manager 
+    inputs.spicetify-nix.homeManagerModules.default 
+    inputs.catppuccin.homeModules.catppuccin
+    ];
 
   home.username = "waylon";
   home.homeDirectory = "/home/waylon";
@@ -25,5 +28,4 @@
     theme = spicePkgs.themes.catppuccin;
     colorScheme = "mocha";
   };
-
 }

@@ -16,9 +16,10 @@
     };
 
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+    catppuccin.url = "github:catppuccin/nix/release-25.05";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, catppuccin, nixpkgs-unstable, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
 
@@ -38,6 +39,7 @@
       };
 
       unstable = nixpkgs-unstable.legacyPackages.${system};
+      catppuccin-nix = catppuccin.legacyPackages.${system};
 
       host = "NixOS-Hyprland";
       username = "waylon";
@@ -47,7 +49,7 @@
         inherit system;
 
         specialArgs = {
-          inherit system inputs nixpkgs-unstable username host;
+          inherit system catppuccin inputs nixpkgs-unstable username host;
         };
 
         modules = [
@@ -57,11 +59,11 @@
         ];
       };
 
-      homeConfigurations."${username}@${host}" = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations."waylon@NixOS-Hyprland" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
         extraSpecialArgs = {
-          inherit inputs self home-manager nixpkgs-unstable unstable;
+          inherit inputs self home-manager nixpkgs-unstable unstable catppuccin; 
         };
 
         modules = [

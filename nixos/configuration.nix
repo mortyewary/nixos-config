@@ -58,8 +58,8 @@ in
         user = userName;
       };
       default_session = {
-        command = "tuigreet";
-        user = userName;
+      command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
+        user = "greeter";
       };
     };
   };
