@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, inputs, unstable, ... }:
 
 {
   home.packages = with pkgs; [
@@ -13,10 +13,10 @@
 
     # --- Gaming ---
     gamescope gamemode protonup-qt openmw
-    heroic     # from nixpkgs-unstable
-    mangohud   # from nixpkgs-unstable
+    unstable.heroic
+    mangohud
     xorg.xeyes          # just for testing XWayland
-  
+
 
     # --- Communication ---
     vesktop signal-desktop discord-canary

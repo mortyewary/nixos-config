@@ -85,7 +85,10 @@ in
     vim
     kitty
     firefox
+    home-manager
   ];
+
+  programs.direnv.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

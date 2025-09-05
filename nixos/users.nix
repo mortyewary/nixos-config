@@ -56,7 +56,7 @@ in
     syntaxHighlighting.enable = true;
 
     promptInit = ''
-      fastfetch -c ~/.config/fastfetch/config.conf;
+      fastfetch
 
       # Pokémon colorscripts (krabby package)
       krabby random --no-mega --no-gmax --no-regional --no-title -s;
