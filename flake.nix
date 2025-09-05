@@ -67,7 +67,7 @@
         modules = [
           ./home-manager/home.nix
           ./modules/home-manager
-          ./home-manager/packages.nix
+          ./modules/home-manager/packages.nix
         ];
       };
 
