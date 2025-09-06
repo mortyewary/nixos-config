@@ -71,8 +71,9 @@
     xarchiver
     yad
     yt-dlp
+    mpv
 
-    waybar # if wanted experimental next line
+    # waybar # if wanted experimental next line
     #(pkgs.waybar.overrideAttrs (oldAttrs: { mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];}))
   ]
 
