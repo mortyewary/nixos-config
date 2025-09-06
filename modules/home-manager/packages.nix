@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, catppuccin,unstable, ... }:
+{ config, pkgs, lib, inputs, unstable, ... }:
 
 {
   home.packages = with pkgs; [
@@ -16,6 +16,7 @@
     unstable.heroic
     mangohud
     xorg.xeyes          # just for testing XWayland
+    inputs.viu.packages.${pkgs.system}.default
 
 
     # --- Communication ---
