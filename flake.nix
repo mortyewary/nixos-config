@@ -39,7 +39,6 @@
       };
 
       unstable = nixpkgs-unstable.legacyPackages.${system};
-      catppuccin-nix = catppuccin.legacyPackages.${system};
 
       host = "NixOS-Hyprland";
       username = "waylon";
@@ -49,7 +48,7 @@
         inherit system;
 
         specialArgs = {
-          inherit system catppuccin inputs nixpkgs-unstable username host;
+          inherit system inputs nixpkgs-unstable username host;
         };
 
         modules = [
@@ -63,7 +62,7 @@
         inherit pkgs;
 
         extraSpecialArgs = {
-          inherit inputs self home-manager nixpkgs-unstable unstable catppuccin; 
+          inherit inputs self home-manager nixpkgs-unstable unstable ; 
         };
 
         modules = [

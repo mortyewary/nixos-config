@@ -79,7 +79,6 @@ in
 
   # System packages
   environment.systemPackages = with pkgs; [
-    git
     wget
     curl
     vim

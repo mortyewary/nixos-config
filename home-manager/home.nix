@@ -1,15 +1,22 @@
-{ inputs, pkgs, ... }: {
-  nixpkgs.config.allowUnfree = true;
+{ inputs, pkgs, ... }:
 
-  imports =
-    [ ../modules/home-manager 
-    inputs.spicetify-nix.homeManagerModules.default 
-    inputs.catppuccin.homeModules.catppuccin
-    ];
+let inherit (import ../nixos/variables.nix) gitUsername gitEmail;
+in {
+  nixpkgs.config.allowUnfree = true;
+  imports = [
+    ../modules/home-manager
+    inputs.spicetify-nix.homeManagerModules.default
+  ];
 
   home.username = "waylon";
   home.homeDirectory = "/home/waylon";
   home.stateVersion = "25.05";
+
+  programs.git = {
+    enable = true;
+    userName = gitUsername;
+    userEmail = gitEmail;
+  };
 
   programs.spicetify = let
     spicePkgs =
