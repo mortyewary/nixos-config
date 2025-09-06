@@ -6,7 +6,7 @@
     unzip git cargo rustc nodejs python3 cmake gnumake nixfmt-classic aria2
 
     # --- Terminal utilities ---
-    tmux btop ncdu fzf ripgrep bat fd jq curl wget ncmpcpp
+    tmux btop ncdu fzf ripgrep bat fd jq curl wget ncmpcpp hyprshot
 
     # --- Ranger-related ---
     w3m ueberzug highlight atool mediainfo ffmpegthumbnailer imagemagick file exiftool

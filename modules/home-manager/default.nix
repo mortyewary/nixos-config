@@ -7,7 +7,7 @@
     ./openmw-nix.nix
     ./packages.nix
     ./wayland.nix
-    #./waybar.nix
+    ./waybar.nix
   ];
 }
 
