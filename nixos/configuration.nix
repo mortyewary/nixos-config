@@ -1,9 +1,7 @@
 { config, pkgs, lib, inputs, ... }:
 
-let
-  inherit (import ./variables.nix) userName;
-in
-{
+let inherit (import ./variables.nix) userName;
+in {
   imports = [
     ./hardware-configuration.nix
     ./users.nix
@@ -36,7 +34,7 @@ in
   hardware.graphics.enable = true;
 
   # Printing & Scanning
-  services.printing.enable = false;
+  services.printing.enable = false;!
   services.avahi.enable = false;
   hardware.sane.enable = false;
 
@@ -58,8 +56,8 @@ in
         user = userName;
       };
       default_session = {
-      command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
-        user = "greeter";
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
+        user = "waylon";
       };
     };
   };
@@ -70,6 +68,9 @@ in
     user = userName;
     musicDirectory = "/home/${userName}/Music";
   };
+
+  # Flatpak 
+  services.flatpak.enable = true;
 
   # Polkit & keyring
   security.polkit.enable = true;

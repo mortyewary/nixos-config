@@ -47,9 +47,7 @@
       nixosConfigurations.${host} = nixpkgs.lib.nixosSystem {
         inherit system;
 
-        specialArgs = {
-          inherit system inputs nixpkgs-unstable username host;
-        };
+        specialArgs = { inherit system inputs nixpkgs-unstable username host; };
 
         modules = [
           ./nixos/configuration.nix
@@ -58,26 +56,25 @@
         ];
       };
 
-      homeConfigurations."waylon@NixOS-Hyprland" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+      homeConfigurations."waylon@NixOS-Hyprland" =
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
 
-        extraSpecialArgs = {
-          inherit inputs self home-manager nixpkgs-unstable unstable ; 
+          extraSpecialArgs = {
+            inherit inputs self home-manager nixpkgs-unstable unstable;
+          };
+
+          modules = [
+            ./home-manager/home.nix
+            ./modules/home-manager
+            ./modules/home-manager/packages.nix
+          ];
         };
 
-        modules = [
-          ./home-manager/home.nix
-          ./modules/home-manager
-          ./modules/home-manager/packages.nix
-        ];
-      };
+      packages =
+        forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
 
-      packages = forAllSystems (system:
-        import ./pkgs nixpkgs.legacyPackages.${system}
-      );
-
-      formatter = forAllSystems (system:
-        nixpkgs.legacyPackages.${system}.alejandra
-      );
+      formatter =
+        forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
     };
 }

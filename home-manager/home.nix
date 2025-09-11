@@ -3,10 +3,8 @@
 let inherit (import ../nixos/variables.nix) gitUsername gitEmail;
 in {
   nixpkgs.config.allowUnfree = true;
-  imports = [
-    ../modules/home-manager
-    inputs.spicetify-nix.homeManagerModules.default
-  ];
+  imports =
+    [ ../modules/home-manager inputs.spicetify-nix.homeManagerModules.default ];
 
   home.username = "waylon";
   home.homeDirectory = "/home/waylon";
